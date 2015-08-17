@@ -9,6 +9,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+/one/settings_local.py
 # C extensions
 *.so
 
