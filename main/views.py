@@ -20,7 +20,7 @@ def get_images(request):
 
 
 def do_get(maxid, amount):
-    ids = random.sample(xrange(maxid), amount)
+    ids = random.sample(xrange(1, maxid+1), amount)
 
     data = []
     for i in Image.objects.filter(id__in=ids):
