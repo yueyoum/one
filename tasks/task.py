@@ -7,7 +7,6 @@ Description:
 
 """
 
-import os
 import json
 import hashlib
 import traceback
@@ -17,7 +16,6 @@ from cStringIO import StringIO
 from django.conf import settings
 
 import uwsgidecorators
-import uwsgi
 import requests
 from PIL import Image
 import boto3
@@ -27,7 +25,7 @@ HEADERS = {
     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:40.0) Gecko/20100101 Firefox/40.0',
 }
 
-@uwsgidecorators.spoolraw
+@uwsgidecorators.spool
 def image_put(args):
     from main.models import Image as ModelImage
 
@@ -52,6 +50,8 @@ def image_put(args):
         )
 
         content_type, _ = mimetypes.guess_type(name)
+        if not content_type:
+            raise Exception("Invalid ContentType.")
 
         s3 = boto3.resource('s3')
         bucket = s3.Bucket(settings.S3_BUCKET_NAME)
@@ -64,13 +64,11 @@ def image_put(args):
         ModelImage.objects.filter(id=image_id).update(
             width=width,
             height=height,
-            url=name,
+            key=name,
             process_done=True,
             display=True,
             result='OK'
         )
-    finally:
-        return uwsgi.SPOOL_OK
 
 
 @uwsgidecorators.spool

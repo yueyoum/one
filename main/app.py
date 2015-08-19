@@ -11,7 +11,6 @@ from django.apps import AppConfig
 
 class MainConfig(AppConfig):
     name = 'main'
-    verbose_name = u'图片'
 
     def ready(self):
         import main.handlers
