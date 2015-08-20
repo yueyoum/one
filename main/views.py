@@ -24,6 +24,9 @@ def do_get(maxid, amount):
 
     data = []
     for i in Image.objects.filter(id__in=ids):
+        if not i.display:
+            continue
+
         image = {
             'url': i.link_url(),
             'w': i.width,
