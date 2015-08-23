@@ -14,6 +14,7 @@ import mimetypes
 from cStringIO import StringIO
 
 from django.conf import settings
+from django.db import connection
 
 import uwsgidecorators
 import requests
@@ -28,6 +29,7 @@ HEADERS = {
 @uwsgidecorators.spool
 def image_put(args):
     from main.models import Image as ModelImage
+    connection.close()
 
     data = json.loads(args['data'])
     image_id = data['image_id']
