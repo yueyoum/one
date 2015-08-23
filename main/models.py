@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Image(models.Model):
-    original_url = models.CharField(max_length=255)
+    original_url = models.CharField(max_length=255, unique=True)
     width = models.IntegerField(default=0)
     height = models.IntegerField(default=0)
     key = models.CharField(max_length=255, blank=True)
