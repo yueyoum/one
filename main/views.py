@@ -5,12 +5,14 @@ from django.db import connection
 
 from main.models import Image
 
+MAX_AMOUNT = 100
+
 def get_images(request):
     with connection.cursor() as c:
         c.execute("select max(id) from {0}".format(Image._meta.db_table))
         maxid = c.fetchone()[0]
 
-    amount = 50 if maxid > 50 else maxid
+    amount = MAX_AMOUNT if maxid > MAX_AMOUNT else maxid
 
     data = []
     while not data:

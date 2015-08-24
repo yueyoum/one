@@ -13,5 +13,5 @@ class ImageAdmin(admin.ModelAdmin):
     list_per_page = 50
 
     def Img(self, obj):
-        return '<a href="{0}" target="_blank"><img src="{0}" width="200px"/></a>'.format(obj.link_url())
+        return '<a href="{0}" target="_blank"><img src="{0}" width="180px"/></a>'.format(obj.link_url())
     Img.allow_tags = True
